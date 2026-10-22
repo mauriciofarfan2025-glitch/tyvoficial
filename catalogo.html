@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo - Timón y Vela</title>
+    
+    <!-- Fuentes de Google -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome para Íconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        tv: {
+                            navy: '#061a2e',
+                            gold: '#b49454',
+                            teal: '#005b60',
+                            light: '#f8fafc',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .glass-nav {
+            background: rgba(6, 26, 46, 0.95);
+            backdrop-filter: blur(10px);
+        }
+        .modal-hidden {
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s ease;
+        }
+        .modal-visible {
+            opacity: 1;
+            pointer-events: auto;
+            transition: all 0.3s ease;
+        }
+    </style>
+</head>
+<body class="bg-tv-light text-gray-800 font-sans antialiased overflow-x-hidden">
+
+    <!-- Navegación -->
+    <nav class="fixed w-full z-50 glass-nav shadow-lg transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <div class="flex-shrink-0 flex items-center gap-3 cursor-pointer" onclick="window.location.href='index.html'">
+                    <img src="Logo.png" alt="Timón y Vela Logo" class="h-14 bg-white rounded-lg p-1" onerror="this.src='https://placehold.co/150x150/061a2e/b49454?text=T%26V'">
+                    <span class="font-serif text-white text-xl font-semibold hidden sm:block">Timón y Vela</span>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="index.html#veleros" class="text-gray-300 hover:text-tv-gold transition-colors font-medium">Nuestros Veleros</a>
+                    <a href="index.html#experiencias" class="text-gray-300 hover:text-tv-gold transition-colors font-medium">Experiencias</a>
+                    <a href="catalogo.html" class="text-tv-gold font-medium">Catálogo</a>
+                    <a href="index.html#operacion" class="text-gray-300 hover:text-tv-gold transition-colors font-medium">Ubicación</a>
+                    <a href="index.html#equipo" class="text-gray-300 hover:text-tv-gold transition-colors font-medium">Equipo</a>
+                </div>
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-btn" class="text-white focus:outline-none">
+                        <i class="fas fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Menú Móvil -->
+        <div id="mobile-menu" class="hidden md:hidden bg-tv-navy border-t border-gray-700">
+            <a href="index.html#veleros" class="block px-4 py-3 text-gray-300 hover:bg-tv-teal hover:text-white">Nuestros Veleros</a>
+            <a href="index.html#experiencias" class="block px-4 py-3 text-gray-300 hover:bg-tv-teal hover:text-white">Experiencias</a>
+            <a href="catalogo.html" class="block px-4 py-3 text-tv-gold bg-tv-navy/50">Catálogo</a>
+            <a href="index.html#operacion" class="block px-4 py-3 text-gray-300 hover:bg-tv-teal hover:text-white">Ubicación</a>
+            <a href="index.html#equipo" class="block px-4 py-3 text-gray-300 hover:bg-tv-teal hover:text-white">Equipo</a>
+        </div>
+    </nav>
+
+    <!-- Contenido del Catálogo -->
+    <main class="pt-28 pb-20 min-h-screen bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Botón de regreso -->
+            <a href="index.html" class="inline-flex items-center text-tv-navy hover:text-tv-gold transition-colors font-semibold text-lg group mb-8">
+                <i class="fas fa-arrow-left mr-2 transform group-hover:-translate-x-1 transition-transform"></i> Volver al Inicio
+            </a>
+
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-5xl font-serif font-bold text-tv-navy mb-4">Arma tu Combo</h2>
+                <div class="h-1 w-24 bg-tv-gold mx-auto rounded"></div>
+                <p class="mt-6 text-gray-600 max-w-2xl mx-auto text-lg">
+                    (Adicionales al valor de tour básico). Personaliza y eleva tu experiencia añadiendo estos servicios exclusivos.
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+                <!-- Tablero -->
+                <div class="bg-tv-light rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 flex flex-col group">
+                    <div class="h-56 overflow-hidden">
+                        <img src="velero1.jpeg" alt="Tablero" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                    </div>
+                    <div class="p-6 flex-grow flex flex-col justify-between">
+                        <div>
+                            <h3 class="font-bold text-tv-navy text-xl mb-2">Tablero</h3>
+                            <p class="text-sm text-gray-600">Un mensaje para esa persona especial.</p>
+                        </div>
+                        <div class="mt-4 font-bold text-tv-teal text-xl">$20.000</div>
+                    </div>
+                </div>
+
+                <!-- Globos -->
+                <div class="bg-tv-light rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 flex flex-col group">
+                    <div class="h-56 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1530103862676-de88b4952002?auto=format&fit=crop&w=600&q=80" alt="Globos" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                    </div>
+                    <div class="p-6 flex-grow flex flex-col justify-between">
+                        <div>
+                            <h3 class="font-bold text-tv-navy text-xl mb-2">Globos</h3>
+                            <p class="text-sm text-gray-600">24 Globos decorando la embarcación.</p>
+                        </div>
+                        <div class="mt-4 font-bold text-tv-teal text-xl">$30.000</div>
+                    </div>
+                </div>
+
+                <!-- Vino Tinto -->
+                <div class="bg-tv-light rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 flex flex-col group">
+                    <div class="h-56 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1506377247377-2a5b3b417ebb?auto=format&fit=crop&w=600&q=80" alt="Vino Tinto" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                    </div>
+                    <div class="p-6 flex-grow flex flex-col justify-between">
+                        <div>
+                            <h3 class="font-bold text-tv-navy text-xl mb-2">Vino Tinto Gato Negro</h3>
+                            <p class="text-sm text-gray-600">1 Botella de vino Tinto Gato Negro.</p>
+                        </div>
+                        <div class="mt-4 font-bold text-tv-teal text-xl">$70.000</div>
+                    </div>
+                </div>
+
+                <!-- Vino Espumoso -->
+                <div class="bg-tv-light rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 flex flex-col group">
+                    <div class="h-56 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1590595906931-81f04f0ccebb?auto=format&fit=crop&w=600&q=80" alt="Vino Espumoso" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                    </div>
+                    <div class="p-6 flex-grow flex flex-col justify-between">
+                        <div>
+                            <h3 class="font-bold text-tv-navy text-xl mb-2">Vino Espumoso Lambrusco</h3>
+                            <p class="text-sm text-gray-600">1 Botella de vino Espumoso Lambrusco.</p>
+                        </div>
+                        <div class="mt-4 font-bold text-tv-teal text-xl">$60.000</div>
+                    </div>
+                </div>
+
+                <!-- Mocktail -->
+                <div class="bg-tv-light rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 flex flex-col group">
+                    <div class="h-56 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=600&q=80" alt="Mocktail" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                    </div>
+                    <div class="p-6 flex-grow flex flex-col justify-between">
+                        <div>
+                            <h3 class="font-bold text-tv-navy text-xl mb-2">Mocktail (sin licor)</h3>
+                            <p class="text-sm text-gray-600">1 Botella Mocktail, puedes elegir entre frutos rojos o frutos amarillos.</p>
+                        </div>
+                        <div class="mt-4 font-bold text-tv-teal text-xl">$40.000</div>
+                    </div>
+                </div>
+
+                <!-- Tabla de Quesos -->
+                <div class="bg-tv-light rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 flex flex-col group">
+                    <div class="h-56 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1631379578550-7038263db699?auto=format&fit=crop&w=600&q=80" alt="Tabla de Quesos" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                    </div>
+                    <div class="p-6 flex-grow flex flex-col justify-between">
+                        <div>
+                            <h3 class="font-bold text-tv-navy text-xl mb-2">Tabla de Quesos</h3>
+                            <p class="text-sm text-gray-600">La mejor combinación de quesos, jamón serrano y frutas para compartir. Para 2-4 personas.</p>
+                        </div>
+                        <div class="mt-4 font-bold text-tv-teal text-xl">$90.000 - $150.000</div>
+                    </div>
+                </div>
+
+                <!-- Sandwich -->
+                <div class="bg-tv-light rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 flex flex-col group">
+                    <div class="h-56 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1528735602780-2552fd46c7af?auto=format&fit=crop&w=600&q=80" alt="Sandwich" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                    </div>
+                    <div class="p-6 flex-grow flex flex-col justify-between">
+                        <div>
+                            <h3 class="font-bold text-tv-navy text-xl mb-2">Sandwich Regatta</h3>
+                            <p class="text-sm text-gray-600">Pan artesanal, lechuga crespa, tomate, queso mozarella, jamón de pollo y pollo desmenuzado en salsa de crema de leche y orégano.</p>
+                        </div>
+                        <div class="mt-4 font-bold text-tv-teal text-xl">$15.000 <span class="text-sm font-normal text-gray-500">c/u</span></div>
+                    </div>
+                </div>
+
+                <!-- Asador -->
+                <div class="bg-tv-light rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 flex flex-col group">
+                    <div class="h-56 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=600&q=80" alt="Asador" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                    </div>
+                    <div class="p-6 flex-grow flex flex-col justify-between">
+                        <div>
+                            <h3 class="font-bold text-tv-navy text-xl mb-2">Asador y Parrillero</h3>
+                            <p class="text-sm text-gray-600">Asador y parrillero a bordo (solo aplica para 2 o más horas). Plato por persona $25.000.</p>
+                        </div>
+                        <div class="mt-4 font-bold text-tv-teal text-xl">$200.000</div>
+                    </div>
+                </div>
+
+                <!-- Flores -->
+                <div class="bg-tv-light rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 flex flex-col group">
+                    <div class="h-56 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1563241527-3004b7be0ffd?auto=format&fit=crop&w=600&q=80" alt="Flores" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                    </div>
+                    <div class="p-6 flex-grow flex flex-col justify-between">
+                        <div>
+                            <h3 class="font-bold text-tv-navy text-xl mb-2">Ramo de Flores</h3>
+                            <p class="text-sm text-gray-600">Ramo de flores para sorprender a tu persona especial.</p>
+                        </div>
+                        <div class="mt-4 font-bold text-tv-teal text-xl">$80.000</div>
+                    </div>
+                </div>
+
+                <!-- Velas -->
+                <div class="bg-tv-light rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 flex flex-col group col-span-1 sm:col-span-2 lg:col-span-1">
+                    <div class="h-56 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1544331596-f64bd0816913?auto=format&fit=crop&w=600&q=80" alt="Velas Especiales" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                    </div>
+                    <div class="p-6 flex-grow flex flex-col justify-between">
+                        <div>
+                            <h3 class="font-bold text-tv-navy text-xl mb-2">Velas Mensajes</h3>
+                            <p class="text-sm text-gray-600">
+                                Opciones: Pedida de novios, mano, Feliz Cumpleaños o Aniversario.<br><br>
+                                Vela sorpresa enrollada sobre la cubierta, se desplegara durante el recorrido cuando des la señal al capitán.
+                            </p>
+                        </div>
+                        <div class="mt-4 font-bold text-tv-teal text-xl">$40.000</div>
+                    </div>
+                </div>
+
+                <!-- Reposteria -->
+                <div class="bg-tv-light rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 flex flex-col group">
+                    <div class="h-56 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1576618148400-f54bed99fcfd?auto=format&fit=crop&w=600&q=80" alt="Repostería" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                    </div>
+                    <div class="p-6 flex-grow flex flex-col justify-between">
+                        <div>
+                            <h3 class="font-bold text-tv-navy text-xl mb-2">Cupcakes / Birthday Mini Cake</h3>
+                            <p class="text-sm text-gray-600">¡Celebra con el diseño que elijas!</p>
+                        </div>
+                        <div class="mt-4 font-bold text-tv-teal text-xl">$50.000</div>
+                    </div>
+                </div>
+
+                <!-- Dúo Guitarra -->
+                <div class="bg-tv-light rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 flex flex-col group">
+                    <div class="h-56 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=600&q=80" alt="Dúo" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                    </div>
+                    <div class="p-6 flex-grow flex flex-col justify-between">
+                        <div>
+                            <h3 class="font-bold text-tv-navy text-xl mb-2">Dúo Guitarra-Voz</h3>
+                            <p class="text-sm text-gray-600">Dúo interpretando las mejores canciones románticas con más de 4 instrumentos.</p>
+                        </div>
+                        <div class="mt-4 font-bold text-tv-teal text-xl">$350.000</div>
+                    </div>
+                </div>
+
+                <!-- Saxofonista -->
+                <div class="bg-tv-light rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 flex flex-col group">
+                    <div class="h-56 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1573871666457-7c7329118cf9?auto=format&fit=crop&w=600&q=80" alt="Saxofonista" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                    </div>
+                    <div class="p-6 flex-grow flex flex-col justify-between">
+                        <div>
+                            <h3 class="font-bold text-tv-navy text-xl mb-2">Saxofonista</h3>
+                            <p class="text-sm text-gray-600">Saxofonista a bordo amenizando todo el recorrido.</p>
+                        </div>
+                        <div class="mt-4 font-bold text-tv-teal text-xl">$200.000</div>
+                    </div>
+                </div>
+
+                <!-- Camarógrafo -->
+                <div class="bg-tv-light rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 flex flex-col group">
+                    <div class="h-56 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=600&q=80" alt="Fotografía" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                    </div>
+                    <div class="p-6 flex-grow flex flex-col justify-between">
+                        <div>
+                            <h3 class="font-bold text-tv-navy text-xl mb-2">Camarógrafo Profesional</h3>
+                            <p class="text-sm text-gray-600">Camarógrafo captando los mejores momentos durante el recorrido, te enviará de 40 a 50 fotografías editadas mediante drive.</p>
+                        </div>
+                        <div class="mt-4 font-bold text-tv-teal text-xl">$200.000</div>
+                    </div>
+                </div>
+
+                <!-- Dron -->
+                <div class="bg-tv-light rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 flex flex-col group">
+                    <div class="h-56 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1508614589041-895b88991e3e?auto=format&fit=crop&w=600&q=80" alt="Dron" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                    </div>
+                    <div class="p-6 flex-grow flex flex-col justify-between">
+                        <div>
+                            <h3 class="font-bold text-tv-navy text-xl mb-2">Video con Dron</h3>
+                            <p class="text-sm text-gray-600">Video con dron de 2 min aprox. Entre semana puedes adquirirlo con nosotros, los fines de semana lo adquieres directamente en el club.</p>
+                        </div>
+                        <div class="mt-4 font-bold text-tv-teal text-xl">$60.000</div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer / Pagos -->
+    <footer class="bg-tv-navy text-white pt-16 pb-8 border-t-4 border-tv-gold">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
+                <!-- Marca -->
+                <div class="flex flex-col items-center md:items-start">
+                    <div class="bg-white p-2 rounded-lg inline-block mb-4">
+                        <img src="Logo T&V (2).png" alt="Timón y Vela" class="h-16" onerror="this.style.display='none'; this.insertAdjacentHTML('afterend', '<h2 class=\'text-tv-navy font-serif font-bold\'>Timón & Vela</h2>');">
+                    </div>
+                    <p class="text-gray-400 text-sm text-center md:text-left mt-2">
+                        Veleros Guatavita.<br>Te esperamos para que vivas la mejor experiencia a bordo.
+                    </p>
+                </div>
+
+                <!-- Pagos -->
+                <div class="flex flex-col items-center md:items-start">
+                    <h4 class="text-lg font-serif font-bold text-tv-gold mb-4">Formas de Pago</h4>
+                    <div class="space-y-3 text-sm text-gray-300 w-full max-w-xs">
+                        <div class="flex justify-between items-center border-b border-gray-700 pb-2">
+                            <span><i class="fas fa-mobile-screen text-purple-400 mr-2"></i>Nequi / Daviplata</span>
+                            <span class="font-mono bg-gray-800 px-2 py-1 rounded select-all cursor-pointer" title="Doble clic para seleccionar">3234228696</span>
+                        </div>
+                        <div class="flex justify-between items-center border-b border-gray-700 pb-2">
+                            <span><i class="fas fa-key text-yellow-500 mr-2"></i>Llave</span>
+                            <span class="font-mono bg-gray-800 px-2 py-1 rounded select-all cursor-pointer">3234228696</span>
+                        </div>
+                        <p class="text-xs text-gray-400 mt-2">Titular: Jhonatan David Prieto Ramos</p>
+                        <div class="mt-4 bg-tv-teal/20 p-3 rounded text-xs border border-tv-teal/30">
+                            <p><i class="fas fa-credit-card mr-1"></i> <strong>Bold (Tarjeta):</strong> Solicita el link (+5% recargo).</p>
+                            <p class="mt-1 text-tv-gold font-semibold"><i class="fas fa-money-bill-wave mr-1"></i> El saldo se solicita cancelarlo en EFECTIVO.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Enlaces -->
+                <div class="flex flex-col items-center md:items-start">
+                    <h4 class="text-lg font-serif font-bold text-tv-gold mb-4">Información Legal</h4>
+                    <button onclick="openModal()" class="flex items-center text-gray-300 hover:text-white transition-colors group">
+                        <i class="fas fa-file-contract mr-2 group-hover:text-tv-gold transition-colors"></i>
+                        Ver Políticas de la Empresa
+                    </button>
+                    <div class="mt-8">
+                        <a href="#" class="bg-green-600 hover:bg-green-500 text-white px-6 py-3 rounded-full font-semibold transition-colors flex items-center shadow-lg">
+                            <i class="fab fa-whatsapp text-2xl mr-2"></i> Contactar
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-700 pt-8 text-center text-sm text-gray-500">
+                <p>&copy; 2024 Timón y Vela - Veleros Guatavita. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modal de Políticas (Mismo que en index.html) -->
+    <div id="policy-modal" class="fixed inset-0 z-[100] flex items-center justify-center modal-hidden">
+        <div class="absolute inset-0 bg-tv-navy/80 backdrop-blur-sm" onclick="closeModal()"></div>
+        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-3xl max-h-[90vh] overflow-y-auto relative z-10 mx-4">
+            <div class="sticky top-0 bg-white border-b border-gray-100 p-6 flex justify-between items-center z-20">
+                <h3 class="text-2xl font-serif font-bold text-tv-navy">Políticas de la Empresa</h3>
+                <button onclick="closeModal()" class="text-gray-400 hover:text-red-500 transition-colors focus:outline-none">
+                    <i class="fas fa-times text-2xl"></i>
+                </button>
+            </div>
+            <div class="p-6 md:p-8 space-y-6 text-gray-600 text-sm md:text-base">
+                <p class="bg-tv-light p-4 rounded-lg border-l-4 border-tv-gold italic">En Timón y Vela queremos brindarles una experiencia inolvidable. Para garantizar una operación organizada y respetar los tiempos, aplican las siguientes políticas:</p>
+                
+                <div>
+                    <h4 class="text-lg font-bold text-tv-navy mb-2"><i class="fas fa-calendar-check mr-2 text-tv-teal"></i>Reserva</h4>
+                    <ul class="list-disc pl-5 space-y-1">
+                        <li>Abono del <strong>50%</strong> del valor total para confirmar.</li>
+                        <li>Llegar 15 minutos antes de la hora programada.</li>
+                        <li>Cambios en la cantidad de personas con mínimo 24h de anticipación. De lo contrario, se cancela el valor de las personas confirmadas inicialmente.</li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-lg font-bold text-tv-navy mb-2"><i class="fas fa-ban mr-2 text-red-500"></i>Cancelaciones</h4>
+                    <ul class="list-disc pl-5 space-y-1">
+                        <li>El abono del 50% <strong>NO es reembolsable</strong>.</li>
+                        <li>En caso de cancelar, se podrá reagendar según disponibilidad.</li>
+                        <li class="font-semibold mt-2">Multas por cancelación:</li>
+                        <ul class="list-circle pl-5 text-red-600 font-medium">
+                            <li>Con 3 horas o más de anticipación: $80.000 COP.</li>
+                            <li>Con 2 horas o menos de anticipación: $160.000 COP.</li>
+                        </ul>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-lg font-bold text-tv-navy mb-2"><i class="fas fa-calendar-days mr-2 text-tv-teal"></i>Reagendación</h4>
+                    <ul class="list-disc pl-5 space-y-1">
+                        <li>Sin multa hasta 1 día antes del tour.</li>
+                        <li>Si se solicita el mismo día, aplica multa por reagendación.</li>
+                        <li>La nueva fecha debe programarse máximo en 2 meses.</li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-lg font-bold text-tv-navy mb-2"><i class="fas fa-burger mr-2 text-tv-gold"></i>Servicios adicionales</h4>
+                    <p>En caso de cancelar el mismo día: Se cobrará el 100% de comida y bebida preparada. Si se reagenda y se desean nuevamente, deberán pagarse otra vez.</p>
+                </div>
+
+                <div class="bg-gray-50 p-4 rounded-lg border border-gray-200">
+                    <h4 class="text-lg font-bold text-tv-navy mb-2"><i class="fas fa-cloud-rain mr-2 text-blue-400"></i>Condiciones climáticas</h4>
+                    <ul class="list-disc pl-5 space-y-1">
+                        <li>Recomendamos llevar chaqueta o ropa para lluvia.</li>
+                        <li>Solo se cancela el tour por <strong>tormenta eléctrica</strong>. En ese caso no hay devolución del abono, se reagendará según disponibilidad.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Lógica de Navegación Móvil
+        const mobileBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const navbar = document.getElementById('navbar');
+
+        mobileBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Cambio de fondo del navbar al hacer scroll
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('shadow-lg');
+                navbar.style.background = 'rgba(6, 26, 46, 0.98)';
+            } else {
+                navbar.classList.remove('shadow-lg');
+                navbar.style.background = 'rgba(6, 26, 46, 0.85)';
+            }
+        });
+
+        // Lógica del Modal de Políticas
+        const modal = document.getElementById('policy-modal');
+        const body = document.body;
+
+        function openModal() {
+            modal.classList.remove('modal-hidden');
+            modal.classList.add('modal-visible');
+            body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            modal.classList.remove('modal-visible');
+            modal.classList.add('modal-hidden');
+            body.style.overflow = 'auto';
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && modal.classList.contains('modal-visible')) {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</html>

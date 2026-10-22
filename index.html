@@ -1,0 +1,1133 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Timón y Vela - Experiencias Guatavita</title>
+    
+    <!-- Fuentes de Google: Playfair Display para elegancia, Inter para legibilidad -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome para Íconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        tv: {
+                            navy: '#061a2e',    /* Azul marino del logo */
+                            gold: '#b49454',    /* Dorado del logo */
+                            teal: '#005b60',    /* Verde azulado de las olas */
+                            light: '#f8fafc',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Estilos personalizados para animaciones y detalles finos */
+        .glass-nav {
+            background: rgba(6, 26, 46, 0.95);
+            backdrop-filter: blur(10px);
+        }
+        .text-gradient {
+            background: linear-gradient(to right, #b49454, #d4ba79);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .hero-bg {
+            background-image: linear-gradient(rgba(6, 26, 46, 0.3), rgba(6, 26, 46, 0.5)), url('velero1.jpeg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+        .tab-active {
+            border-bottom: 2px solid #b49454;
+            color: #b49454;
+            font-weight: 600;
+        }
+        .modal-hidden {
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s ease;
+        }
+        .modal-visible {
+            opacity: 1;
+            pointer-events: auto;
+            transition: all 0.3s ease;
+        }
+    </style>
+</head>
+<body class="bg-tv-light text-gray-800 font-sans antialiased overflow-x-hidden">
+
+    <!-- Navegación -->
+    <nav class="fixed w-full z-50 glass-nav shadow-lg transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <div class="flex-shrink-0 flex items-center gap-3 cursor-pointer" onclick="window.location.href='index.html'">
+                    <img src="Logo.png" alt="Timón y Vela Logo" class="h-14 bg-white rounded-lg p-1" onerror="this.src='https://placehold.co/150x150/061a2e/b49454?text=T%26V'">
+                    <span class="font-serif text-white text-xl font-semibold hidden sm:block">Timón y Vela</span>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#veleros" class="text-gray-300 hover:text-tv-gold transition-colors font-medium">Nuestros Veleros</a>
+                    <a href="#experiencias" class="text-gray-300 hover:text-tv-gold transition-colors font-medium">Experiencias</a>
+                    <a href="catalogo.html" class="text-gray-300 hover:text-tv-gold transition-colors font-medium">Catálogo</a>
+                    <a href="#operacion" class="text-gray-300 hover:text-tv-gold transition-colors font-medium">Ubicación</a>
+                    <a href="#equipo" class="text-gray-300 hover:text-tv-gold transition-colors font-medium">Equipo</a>
+                </div>
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-btn" class="text-white focus:outline-none">
+                        <i class="fas fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Menú Móvil -->
+        <div id="mobile-menu" class="hidden md:hidden bg-tv-navy border-t border-gray-700">
+            <a href="#veleros" onclick="toggleMobileMenu()" class="block px-4 py-3 text-gray-300 hover:bg-tv-teal hover:text-white">Nuestros Veleros</a>
+            <a href="#experiencias" onclick="toggleMobileMenu()" class="block px-4 py-3 text-gray-300 hover:bg-tv-teal hover:text-white">Experiencias</a>
+            <a href="catalogo.html" class="block px-4 py-3 text-gray-300 hover:bg-tv-teal hover:text-white">Catálogo</a>
+            <a href="#operacion" onclick="toggleMobileMenu()" class="block px-4 py-3 text-gray-300 hover:bg-tv-teal hover:text-white">Ubicación</a>
+            <a href="#equipo" onclick="toggleMobileMenu()" class="block px-4 py-3 text-gray-300 hover:bg-tv-teal hover:text-white">Equipo</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="inicio" class="hero-bg min-h-screen flex items-center justify-center pt-20 relative">
+        <div class="absolute inset-0 bg-gradient-to-b from-transparent to-tv-navy opacity-50"></div>
+        <div class="relative z-10 text-center px-4 max-w-4xl mx-auto flex flex-col items-center">
+            <img src="Logo.png" alt="Logo Experiencias Guatavita" class="w-64 md:w-80 mb-8 bg-white/10 backdrop-blur-sm p-4 rounded-3xl shadow-2xl border border-white/20" onerror="this.style.display='none'">
+            <h1 class="text-4xl md:text-6xl font-serif font-bold text-white mb-6 drop-shadow-lg">
+                Experiencias <span class="text-gradient">Inolvidables</span>
+            </h1>
+            <p class="text-lg md:text-2xl text-gray-200 mb-10 font-light drop-shadow-md">
+                ¡Te esperamos para que vivas la mejor experiencia a bordo en el embalse de Guatavita!
+            </p>
+            <a href="https://wa.me/573108507415?text=Hola%20Timón%20y%20Vela,%20vengo%20de%20la%20página%20web%20y%20me%20gustaría%20reservar%20una%20experiencia." target="_blank" rel="noopener noreferrer" class="bg-tv-gold hover:bg-yellow-600 text-white px-8 py-4 rounded-full font-semibold text-lg transition-all duration-300 transform hover:scale-105 shadow-[0_0_20px_rgba(180,148,84,0.5)]">
+                Reserva tu aventura
+            </a>
+        </div>
+        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
+            <a href="#veleros" class="text-white/70 hover:text-tv-gold transition-colors">
+                <i class="fas fa-chevron-down text-3xl"></i>
+            </a>
+        </div>
+    </section>
+
+    <!-- Veleros Section -->
+    <section id="veleros" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <!-- Encabezado dividido con imagen a la derecha -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center mb-16">
+                <!-- Textos a la izquierda -->
+                <div class="text-center lg:text-left">
+                    <h2 class="text-3xl md:text-4xl font-serif font-bold text-tv-navy mb-4">Nuestros Veleros</h2>
+                    <div class="h-1 w-20 bg-tv-gold mx-auto lg:mx-0 rounded"></div>
+                    <p class="mt-6 text-gray-600 text-lg">
+                        Nuestro velero tipo crucero Eclipse 83 es el de mayor tamaño en el embalse. Tienen capacidad para hasta <strong class="text-tv-teal">7 personas</strong>, ofreciendo un espacio amplio y cómodo.
+                    </p>
+                </div>
+                
+                <!-- Imagen a la derecha -->
+                <div class="relative rounded-3xl overflow-hidden shadow-xl group h-64 md:h-80">
+                    <img src="foto velero.jpeg" alt="Nuestro Velero" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700">
+                </div>
+            </div>
+
+            <!-- Beneficios e Iconos -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                <div class="space-y-6">
+                    <div class="bg-tv-light p-6 rounded-2xl shadow-sm border border-gray-100 flex items-start gap-4">
+                        <div class="bg-tv-teal text-white p-3 rounded-full"><i class="fas fa-ship fa-fw text-xl"></i></div>
+                        <div>
+                            <h3 class="text-xl font-bold text-tv-navy">Experiencias 100% Privadas</h3>
+                            <p class="text-gray-600 mt-2">Disfruta de un recorrido exclusivo con capitán certificado, asegurando tu tranquilidad y seguridad.</p>
+                        </div>
+                    </div>
+                    <div class="bg-tv-light p-6 rounded-2xl shadow-sm border border-gray-100 flex items-start gap-4">
+                        <div class="bg-tv-gold text-white p-3 rounded-full"><i class="fas fa-couch fa-fw text-xl"></i></div>
+                        <div>
+                            <h3 class="text-xl font-bold text-tv-navy">Máxima Comodidad</h3>
+                            <p class="text-gray-600 mt-2">Incluye chalecos salvavidas, colchonetas y puffs para relajarse plenamente en el embalse.</p>
+                        </div>
+                    </div>
+                    <div class="bg-tv-light p-6 rounded-2xl shadow-sm border border-gray-100 flex items-start gap-4">
+                        <div class="bg-tv-navy text-white p-3 rounded-full"><i class="fas fa-music fa-fw text-xl"></i></div>
+                        <div>
+                            <h3 class="text-xl font-bold text-tv-navy">Ambiente a tu Medida</h3>
+                            <p class="text-gray-600 mt-2">Ponemos a tu disposición un parlante JBL para ambientar el recorrido con la música que prefieran.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Sección de imagen única para distribución de espacios -->
+                <div class="relative rounded-3xl overflow-hidden shadow-2xl group h-[400px]">
+                    <img src="distribucionespacios.png" alt="Distribución del Velero" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" onerror="this.src='https://images.unsplash.com/photo-1540544660406-6a69dacb2804?auto=format&fit=crop&q=80'">
+                    
+                    <div class="absolute inset-0 bg-gradient-to-t from-tv-navy/90 via-tv-navy/20 to-transparent flex flex-col justify-end p-4 md:p-6">
+                        <h4 class="font-serif font-bold text-2xl text-white mb-4 drop-shadow-md">Distribución de Espacios</h4>
+                        
+                        <div class="flex flex-col sm:flex-row gap-2 md:gap-3">
+                            <div class="bg-black/40 backdrop-blur-md px-3 py-2 md:py-3 rounded-xl border border-white/20 flex-1 text-center shadow-lg">
+                                <span class="block text-tv-gold text-xs uppercase tracking-wider font-bold mb-1">Cubierta</span>
+                                <span class="text-white text-sm font-medium">3-4 Personas</span>
+                            </div>
+                            <div class="bg-black/40 backdrop-blur-md px-3 py-2 md:py-3 rounded-xl border border-white/20 flex-1 text-center shadow-lg">
+                                <span class="block text-tv-gold text-xs uppercase tracking-wider font-bold mb-1">Cabina</span>
+                                <span class="text-white text-sm font-medium">3-4 Personas</span>
+                            </div>
+                            <div class="bg-black/50 backdrop-blur-md px-3 py-2 md:py-3 rounded-xl border border-tv-gold/50 flex-1 text-center shadow-lg">
+                                <span class="block text-tv-gold text-xs uppercase tracking-wider font-bold mb-1">Tina (Cockpit)</span>
+                                <span class="text-white text-sm font-medium">5-6 Personas</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experiencias / Pricing Section -->
+    <section id="experiencias" class="py-20 bg-tv-light">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-serif font-bold text-tv-navy mb-4">Nuestras Experiencias</h2>
+                <div class="h-1 w-20 bg-tv-teal mx-auto rounded mb-8"></div>
+                <p class="text-gray-600 max-w-2xl mx-auto">Selecciona el tipo de tour para conocer nuestras tarifas. Todos los recorridos tienen una duración de 50 minutos.</p>
+            </div>
+
+            <!-- Tabs -->
+            <div class="flex justify-center mb-8">
+                <div class="bg-white rounded-full shadow-md p-1 inline-flex">
+                    <button id="tab-solo" onclick="switchTab('solo')" class="px-8 py-3 rounded-full font-semibold transition-colors duration-300 bg-tv-navy text-white">Solo Tour</button>
+                    <button id="tab-combo" onclick="switchTab('combo')" class="px-8 py-3 rounded-full font-semibold transition-colors duration-300 text-gray-600 hover:text-tv-navy">Tour Combo</button>
+                </div>
+            </div>
+
+            <!-- Tab Content: Solo Tour -->
+            <div id="content-solo" class="max-w-4xl mx-auto bg-white rounded-3xl shadow-xl overflow-hidden transition-all duration-500">
+                <div class="p-8 md:p-12">
+                    <div class="text-center mb-8">
+                        <h3 class="text-2xl font-serif font-bold text-tv-navy">Tarifas Solo Tour</h3>
+                        <p class="text-gray-500 mt-2">Disfruta de la navegación pura. (Incluye: capitán certificado, chalecos y parlante JBL).</p>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        <div class="border border-gray-100 rounded-xl p-6 bg-gray-50 flex items-center justify-between">
+                            <span class="font-bold text-gray-700"><i class="fas fa-heart text-red-400 mr-2"></i>Pareja (2 personas)</span>
+                            <span class="text-tv-gold font-bold text-xl">$200.000 <span class="text-xs text-gray-400 font-normal">Total</span></span>
+                        </div>
+                        <div class="border border-gray-100 rounded-xl p-6 bg-gray-50 flex items-center justify-between">
+                            <span class="font-bold text-gray-700"><i class="fas fa-users text-tv-teal mr-2"></i>3 a 5 personas</span>
+                            <span class="text-tv-gold font-bold text-xl">$80.000 <span class="text-xs text-gray-400 font-normal">/persona</span></span>
+                        </div>
+                        <div class="border border-gray-100 rounded-xl p-6 bg-gray-50 flex items-center justify-between">
+                            <span class="font-bold text-gray-700"><i class="fas fa-users text-tv-teal mr-2"></i>6 a 8 personas</span>
+                            <span class="text-tv-gold font-bold text-xl">$70.000 <span class="text-xs text-gray-400 font-normal">/persona</span></span>
+                        </div>
+                        <div class="border border-gray-100 rounded-xl p-6 bg-gray-50 flex items-center justify-between">
+                            <span class="font-bold text-gray-700"><i class="fas fa-users text-tv-teal mr-2"></i>9 a 12 personas</span>
+                            <span class="text-tv-gold font-bold text-xl">$65.000 <span class="text-xs text-gray-400 font-normal">/persona</span></span>
+                        </div>
+                    </div>
+
+                    <div class="mt-10 text-center">
+                        <a href="https://wa.me/573108507415?text=Hola,%20me%20gustaría%20reservar%20un%20Solo%20Tour%20en%20velero." target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center bg-tv-gold hover:bg-yellow-600 text-white px-10 py-4 rounded-full font-bold text-lg transition-all duration-300 shadow-lg transform hover:-translate-y-1 hover:shadow-xl">
+                            <i class="fab fa-whatsapp text-2xl mr-3"></i> Reserva ahora
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab Content: Combo -->
+            <div id="content-combo" class="max-w-4xl mx-auto bg-white rounded-3xl shadow-xl overflow-hidden hidden">
+                <div class="p-8 md:p-12">
+                    <div class="text-center mb-8">
+                        <h3 class="text-2xl font-serif font-bold text-tv-navy">Tarifas Tour Combo</h3>
+                        <p class="text-gray-500 mt-2 max-w-2xl mx-auto">
+                            <strong>Incluye:</strong> 50 min de recorrido, decoración con globos y tablero, sándwich por persona y botella de vino espumoso.
+                        </p>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                        <div class="border border-gray-100 rounded-xl p-4 bg-gray-50 flex items-center justify-between">
+                            <span class="font-bold text-gray-700">3 Personas</span>
+                            <span class="text-tv-teal font-bold text-lg">$132.000 <span class="text-xs text-gray-400 font-normal">/persona</span></span>
+                        </div>
+                        <div class="border border-gray-100 rounded-xl p-4 bg-gray-50 flex items-center justify-between">
+                            <span class="font-bold text-gray-700">4 Personas</span>
+                            <span class="text-tv-teal font-bold text-lg">$123.000 <span class="text-xs text-gray-400 font-normal">/persona</span></span>
+                        </div>
+                        <div class="border border-gray-100 rounded-xl p-4 bg-gray-50 flex items-center justify-between">
+                            <span class="font-bold text-gray-700">5 Personas</span>
+                            <span class="text-tv-teal font-bold text-lg">$117.000 <span class="text-xs text-gray-400 font-normal">/persona</span></span>
+                        </div>
+                        <div class="border border-gray-100 rounded-xl p-4 bg-gray-50 flex items-center justify-between">
+                            <span class="font-bold text-gray-700">6 Personas</span>
+                            <span class="text-tv-teal font-bold text-lg">$104.000 <span class="text-xs text-gray-400 font-normal">/persona</span></span>
+                        </div>
+                        <div class="border border-gray-100 rounded-xl p-4 bg-gray-50 flex items-center justify-between">
+                            <span class="font-bold text-gray-700">7 Personas</span>
+                            <span class="text-tv-teal font-bold text-lg">$101.000 <span class="text-xs text-gray-400 font-normal">/persona</span></span>
+                        </div>
+                        <div class="border border-gray-100 rounded-xl p-4 bg-gray-50 flex items-center justify-between">
+                            <span class="font-bold text-gray-700">8 Personas</span>
+                            <span class="text-tv-teal font-bold text-lg">$99.000 <span class="text-xs text-gray-400 font-normal">/persona</span></span>
+                        </div>
+                        <div class="border border-gray-100 rounded-xl p-4 bg-gray-50 flex items-center justify-between">
+                            <span class="font-bold text-gray-700">9 Personas</span>
+                            <span class="text-tv-teal font-bold text-lg">$93.000 <span class="text-xs text-gray-400 font-normal">/persona</span></span>
+                        </div>
+                        <div class="border border-gray-100 rounded-xl p-4 bg-gray-50 flex items-center justify-between">
+                            <span class="font-bold text-gray-700">10 Personas</span>
+                            <span class="text-tv-teal font-bold text-lg">$91.000 <span class="text-xs text-gray-400 font-normal">/persona</span></span>
+                        </div>
+                        <div class="border border-tv-gold/30 rounded-xl p-4 bg-tv-gold/5 flex items-center justify-between shadow-sm">
+                            <span class="font-bold text-gray-800">11 Personas</span>
+                            <span class="text-tv-gold font-bold text-lg">$90.000 <span class="text-xs text-gray-500 font-normal">/persona</span></span>
+                        </div>
+                    </div>
+
+                    <div class="mt-10 text-center">
+                        <a href="https://wa.me/573108507415?text=Hola,%20me%20gustaría%20reservar%20Un%20Tour%20Combo." target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center bg-tv-gold hover:bg-yellow-600 text-white px-10 py-4 rounded-full font-bold text-lg transition-all duration-300 shadow-lg transform hover:-translate-y-1 hover:shadow-xl">
+                            <i class="fab fa-whatsapp text-2xl mr-3"></i> Reserva ahora
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Operación / Clubes Section -->
+    <section id="operacion" class="py-20 bg-gray-50 border-t border-gray-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-serif font-bold text-tv-navy mb-4">Nuestra Ubicación</h2>
+                <div class="h-1 w-20 bg-tv-gold mx-auto rounded"></div>
+                <p class="mt-6 text-gray-600 max-w-2xl mx-auto text-lg">
+                    Estamos ubicados en Guatavita, Cundinamarca. Te esperamos en nuestras instalaciones exclusivas para comenzar la aventura.
+                </p>
+            </div>
+
+            <!-- Club 2 Centrado -->
+            <div class="max-w-3xl mx-auto">
+                <div class="border border-gray-200 rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-shadow duration-300">
+                    
+                    <!-- Encabezado con imagen clara y sin sombreado de fondo -->
+                    <div class="h-56 relative flex items-center justify-center overflow-hidden bg-gray-100">
+                        <!-- Aquí pones el nombre de tu foto del club -->
+                        <img src="velero1.jpeg" alt="Club Hansa" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 hover:scale-105" onerror="this.src='https://images.unsplash.com/photo-1518182170546-076616fd67e6?auto=format&fit=crop&q=80'">
+                        
+                        <!-- Texto con sombra fuerte para asegurar que sea legible -->
+                        <h3 class="relative text-4xl font-serif text-white font-bold z-10 text-center drop-shadow-[0_4px_4px_rgba(0,0,0,0.9)]">
+                            <span class="block text-tv-gold text-xl mb-2 drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)]">CLUB</span> NÁUTICO
+                        </h3>
+                    </div>
+                    
+                    <div class="p-8 md:p-10">
+                        <ul class="space-y-4 mb-8 text-lg">
+                            <li class="flex items-center text-gray-700"><i class="fas fa-gem text-tv-gold mr-4 text-xl"></i> Club privado (Solo socios, sin aglomeraciones)</li>
+                            <li class="flex items-center text-gray-700"><i class="fas fa-leaf text-tv-teal mr-4 text-xl"></i> Sendero ecológico (Flora y Fauna)</li>
+                            <li class="flex items-center text-gray-700"><i class="fas fa-dog text-tv-teal mr-4 text-xl"></i> Permitido mascotas</li>
+                            <li class="flex items-center text-gray-500 line-through"><i class="fas fa-ban text-red-400 mr-4 text-xl"></i> No se permiten asados</li>
+                        </ul>
+                        
+                        <!-- Tarifa -->
+                        <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100 shadow-inner">
+                            <h4 class="font-bold text-tv-navy mb-4 text-sm uppercase tracking-wider">Valor Ingreso (Obligatorio/independiente)</h4>
+                            <div class="flex justify-between text-base">
+                                <span class="text-gray-600"><i class="fas fa-user mr-2"></i>Por persona</span>
+                                <span class="font-bold text-tv-teal text-xl">$20.000</span>
+                            </div>
+                        </div>
+
+                        <!-- Botón de reserva -->
+                        <div class="mt-8 text-center">
+                            <a href="https://wa.me/573108507415?text=Hola%20Timón%20y%20Vela,%20vengo%20de%20la%20página%20web%20y%20me%20gustaría%20reservar%20una%20experiencia." target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center bg-tv-gold hover:bg-yellow-600 text-white px-8 py-3 rounded-full font-bold text-lg transition-all duration-300 shadow-md transform hover:-translate-y-1 hover:shadow-lg">
+                                <i class="fab fa-whatsapp text-2xl mr-3"></i> Reserva ahora
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Equipo Section -->
+    <section id="equipo" class="py-20 bg-tv-light">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-serif font-bold text-tv-navy mb-4">Nuestro Equipo</h2>
+                <div class="h-1 w-20 bg-tv-teal mx-auto rounded"></div>
+                <p class="mt-6 text-gray-600 max-w-2xl mx-auto">
+                    Al llegar al club, podrán identificarnos fácilmente por nuestro uniforme corporativo. Contamos con capitanes certificados por CIFCO Y también estamos certificados por el <strong> MINISTERIO DE TRANSPORTE</strong> para tu total seguridad.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
+               
+                <!-- Miembro 2 -->
+                <div class="bg-white rounded-2xl p-6 text-center shadow hover:-translate-y-2 transition-transform duration-300">
+                    <img src="equipo de trabajo/valentina.png" alt="Valentina Reyes" class="w-20 h-20 mx-auto rounded-full object-cover mb-4 shadow-md border-2 border-tv-teal/30" onerror="this.src='https://placehold.co/150x150/061a2e/b49454?text=VR'">
+                    <h4 class="font-bold text-gray-800 text-sm">Valentina Reyes</h4>
+                    <p class="text-xs text-tv-teal font-semibold mt-1">CEO</p>
+                </div>
+                <!-- Miembro 3 -->
+                <div class="bg-white rounded-2xl p-6 text-center shadow hover:-translate-y-2 transition-transform duration-300 border-b-4 border-tv-gold">
+                    <img src="equipo de trabajo/Duvancifuentes.png" alt="Duvan Cifuentes" class="w-20 h-20 mx-auto rounded-full object-cover mb-4 shadow-md border-2 border-tv-gold/30" onerror="this.src='https://placehold.co/150x150/061a2e/b49454?text=DC'">
+                    <h4 class="font-bold text-gray-800 text-sm">Duvan Cifuentes</h4>
+                    <p class="text-xs text-tv-gold font-semibold mt-1">Capitán Certificado</p>
+                </div>
+                <!-- Miembro 4 -->
+                <div class="bg-white rounded-2xl p-6 text-center shadow hover:-translate-y-2 transition-transform duration-300 border-b-4 border-tv-gold">
+                    <img src="equipo de trabajo/feliperodriguez.png" alt="Felipe Rodriguez" class="w-20 h-20 mx-auto rounded-full object-cover mb-4 shadow-md border-2 border-tv-gold/30" onerror="this.src='https://placehold.co/150x150/061a2e/b49454?text=FR'">
+                    <h4 class="font-bold text-gray-800 text-sm">Felipe Rodriguez</h4>
+                    <p class="text-xs text-tv-gold font-semibold mt-1">Capitán Certificado</p>
+                </div>
+                
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer / Pagos -->
+    <footer class="bg-tv-navy text-white pt-16 pb-8 border-t-4 border-tv-gold">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
+                <!-- Marca -->
+                <div class="flex flex-col items-center md:items-start">
+                    <div class="bg-white p-2 rounded-lg inline-block mb-4">
+                        <img src="Logo T&V (2).png" alt="Timón y Vela" class="h-16" onerror="this.style.display='none'; this.insertAdjacentHTML('afterend', '<h2 class=\'text-tv-navy font-serif font-bold\'>Timón & Vela</h2>');">
+                    </div>
+                    <p class="text-gray-400 text-sm text-center md:text-left mt-2">
+                        Veleros Guatavita.<br>Te esperamos para que vivas la mejor experiencia a bordo.
+                    </p>
+                </div>
+
+                <!-- Pagos -->
+                <div class="flex flex-col items-center md:items-start">
+                    <h4 class="text-lg font-serif font-bold text-tv-gold mb-4">Formas de Pago</h4>
+                    <div class="space-y-3 text-sm text-gray-300 w-full max-w-xs">
+                        <div class="flex justify-between items-center border-b border-gray-700 pb-2">
+                            <span><i class="fas fa-mobile-screen text-purple-400 mr-2"></i>Cuenta de ahorros Bancolombia:</span>
+                            <span class="font-mono bg-gray-800 px-2 py-1 rounded select-all cursor-pointer" title="Doble clic para seleccionar">33600001653</span>
+                        </div>
+                        <div class="flex justify-between items-center border-b border-gray-700 pb-2">
+                            <span><i class="fas fa-key text-yellow-500 mr-2"></i>Llave</span>
+                            <span class="font-mono bg-gray-800 px-2 py-1 rounded select-all cursor-pointer">1071144374</span>
+                        </div>
+                        <p class="text-xs text-gray-400 mt-2">Titular: Valentina Reyes</p>
+                        <div class="mt-4 bg-tv-teal/20 p-3 rounded text-xs border border-tv-teal/30">
+                            <p><i class="fas fa-credit-card mr-1"></i> <strong>Bold (Tarjeta):</strong> Solicita el link (+5% recargo).</p>
+                            <p class="mt-1 text-tv-gold font-semibold"><i class="fas fa-money-bill-wave mr-1"></i> El saldo se solicita cancelarlo en EFECTIVO.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Enlaces -->
+                <div class="flex flex-col items-center md:items-start">
+                    <h4 class="text-lg font-serif font-bold text-tv-gold mb-4">Información Legal</h4>
+                    <button onclick="openModal()" class="flex items-center text-gray-300 hover:text-white transition-colors group">
+                        <i class="fas fa-file-contract mr-2 group-hover:text-tv-gold transition-colors"></i>
+                        Ver Políticas de la Empresa
+                    </button>
+                    <div class="mt-8">
+                        <a href="https://wa.me/573108507415?text=Hola%20Timón%20y%20Vela,%20vengo%20de%20la%20página%20web%20y%20me%20gustaría%20reservar%20una%20experiencia." target="_blank" rel="noopener noreferrer" class="bg-green-600 hover:bg-green-500 text-white px-6 py-3 rounded-full font-semibold transition-colors flex items-center shadow-lg">
+                            <i class="fab fa-whatsapp text-2xl mr-2"></i> Contactar
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-700 pt-8 text-center text-sm text-gray-500">
+                <p>&copy; 2024 Timón y Vela - Veleros Guatavita. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modal de Políticas -->
+    <div id="policy-modal" class="fixed inset-0 z-[100] flex items-center justify-center modal-hidden">
+        <div class="absolute inset-0 bg-tv-navy/80 backdrop-blur-sm" onclick="closeModal()"></div>
+        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-3xl max-h-[90vh] overflow-y-auto relative z-10 mx-4">
+            <div class="sticky top-0 bg-white border-b border-gray-100 p-6 flex justify-between items-center z-20">
+                <h3 class="text-2xl font-serif font-bold text-tv-navy">Políticas de la Empresa</h3>
+                <button onclick="closeModal()" class="text-gray-400 hover:text-red-500 transition-colors focus:outline-none">
+                    <i class="fas fa-times text-2xl"></i>
+                </button>
+            </div>
+            <div class="p-6 md:p-8 space-y-6 text-gray-600 text-sm md:text-base">
+                <p class="bg-tv-light p-4 rounded-lg border-l-4 border-tv-gold italic">En Timón y Vela queremos brindarles una experiencia inolvidable. Para garantizar una operación organizada y respetar los tiempos, aplican las siguientes políticas:</p>
+                
+                <div>
+                    <h4 class="text-lg font-bold text-tv-navy mb-2"><i class="fas fa-calendar-check mr-2 text-tv-teal"></i>Reserva</h4>
+                    <ul class="list-disc pl-5 space-y-1">
+                        <li>Abono del <strong>50%</strong> del valor total para confirmar.</li>
+                        <li>Llegar 15 minutos antes de la hora programada.</li>
+                        <li>Cambios en la cantidad de personas con mínimo 24h de anticipación. De lo contrario, se cancela el valor de las personas confirmadas inicialmente.</li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-lg font-bold text-tv-navy mb-2"><i class="fas fa-ban mr-2 text-red-500"></i>Cancelaciones</h4>
+                    <ul class="list-disc pl-5 space-y-1">
+                        <li>El abono del 50% <strong>NO es reembolsable</strong>.</li>
+                        <li>En caso de cancelar, se podrá reagendar según disponibilidad.</li>
+                        <li class="font-semibold mt-2">Multas por cancelación:</li>
+                        <ul class="list-circle pl-5 text-red-600 font-medium">
+                            <li>Con 3 horas o más de anticipación: $80.000 COP.</li>
+                            <li>Con 2 horas o menos de anticipación: $160.000 COP.</li>
+                        </ul>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-lg font-bold text-tv-navy mb-2"><i class="fas fa-calendar-days mr-2 text-tv-teal"></i>Reagendación</h4>
+                    <ul class="list-disc pl-5 space-y-1">
+                        <li>Sin multa hasta 1 día antes del tour.</li>
+                        <li>Si se solicita el mismo día, aplica multa por reagendación.</li>
+                        <li>La nueva fecha debe programarse máximo en 2 meses.</li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-lg font-bold text-tv-navy mb-2"><i class="fas fa-burger mr-2 text-tv-gold"></i>Servicios adicionales</h4>
+                    <p>En caso de cancelar el mismo día: Se cobrará el 100% de comida y bebida preparada. Si se reagenda y se desean nuevamente, deberán pagarse otra vez.</p>
+                </div>
+
+                <div class="bg-gray-50 p-4 rounded-lg border border-gray-200">
+                    <h4 class="text-lg font-bold text-tv-navy mb-2"><i class="fas fa-cloud-rain mr-2 text-blue-400"></i>Condiciones climáticas</h4>
+                    <ul class="list-disc pl-5 space-y-1">
+                        <li>Recomendamos llevar chaqueta o ropa para lluvia.</li>
+                        <li>Solo se cancela el tour por <strong>tormenta eléctrica</strong>. En ese caso no hay devolución del abono, se reagendará según disponibilidad.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Botón Flotante de WhatsApp -->
+    <a href="https://wa.me/573108507415?text=Hola%20Timón%20y%20Vela,%20vengo%20de%20la%20página%20web%20y%20me%20gustaría%20reservar%20una%20experiencia." target="_blank" rel="noopener noreferrer" class="fixed bottom-6 right-6 z-50 bg-[#25D366] hover:bg-[#128C7E] text-white rounded-full w-16 h-16 flex items-center justify-center shadow-[0_4px_14px_0_rgba(37,211,102,0.5)] transition-all duration-300 hover:scale-110 group animate-bounce-slow">
+        <i class="fab fa-whatsapp text-4xl"></i>
+        <!-- Tooltip emergente al pasar el mouse -->
+        <span class="absolute right-20 bg-white text-gray-800 text-sm px-4 py-2 rounded-xl shadow-lg border border-gray-100 opacity-0 pointer-events-none group-hover:opacity-100 transition-opacity duration-300 w-max font-medium">
+            ¡Reserva aquí!
+            <!-- Triangulito del globo de diálogo -->
+            <span class="absolute top-1/2 -right-2 transform -translate-y-1/2 w-0 h-0 border-t-[6px] border-t-transparent border-l-[8px] border-l-white border-b-[6px] border-b-transparent"></span>
+        </span>
+    </a>
+
+    <script>
+        // Lógica de Navegación Móvil
+        const mobileBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const navbar = document.getElementById('navbar');
+
+        function toggleMobileMenu() {
+            mobileMenu.classList.toggle('hidden');
+        }
+
+        mobileBtn.addEventListener('click', toggleMobileMenu);
+
+        // Cambio de fondo del navbar al hacer scroll
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('shadow-lg');
+                navbar.style.background = 'rgba(6, 26, 46, 0.98)';
+            } else {
+                navbar.classList.remove('shadow-lg');
+                navbar.style.background = 'rgba(6, 26, 46, 0.85)';
+            }
+        });
+
+        // Lógica de Pestañas (Tabs) de Precios
+        function switchTab(tabId) {
+            const btnSolo = document.getElementById('tab-solo');
+            const btnCombo = document.getElementById('tab-combo');
+            const contentSolo = document.getElementById('content-solo');
+            const contentCombo = document.getElementById('content-combo');
+
+            // Resetear estilos
+            btnSolo.className = "px-8 py-3 rounded-full font-semibold transition-colors duration-300 text-gray-600 hover:text-tv-navy";
+            btnCombo.className = "px-8 py-3 rounded-full font-semibold transition-colors duration-300 text-gray-600 hover:text-tv-navy";
+            
+            contentSolo.classList.add('hidden');
+            contentCombo.classList.add('hidden');
+
+            // Activar seleccionada
+            if (tabId === 'solo') {
+                btnSolo.className = "px-8 py-3 rounded-full font-semibold transition-colors duration-300 bg-tv-navy text-white";
+                contentSolo.classList.remove('hidden');
+                contentSolo.style.opacity = 0;
+                setTimeout(() => contentSolo.style.opacity = 1, 50);
+            } else {
+                btnCombo.className = "px-8 py-3 rounded-full font-semibold transition-colors duration-300 bg-tv-navy text-white";
+                contentCombo.classList.remove('hidden');
+                contentCombo.style.opacity = 0;
+                setTimeout(() => contentCombo.style.opacity = 1, 50);
+            }
+        }
+
+        // Lógica del Modal de Políticas
+        const modal = document.getElementById('policy-modal');
+        const body = document.body;
+
+        function openModal() {
+            modal.classList.remove('modal-hidden');
+            modal.classList.add('modal-visible');
+            body.style.overflow = 'hidden'; // Prevenir scroll de fondo
+        }
+
+        function closeModal() {
+            modal.classList.remove('modal-visible');
+            modal.classList.add('modal-hidden');
+            body.style.overflow = 'auto'; // Restaurar scroll
+        }
+
+        // Cerrar modal con la tecla ESC
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && modal.classList.contains('modal-visible')) {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</html>
+
+
+
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo - Timón y Vela</title>
+    
+    <!-- Fuentes de Google -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome para Íconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        tv: {
+                            navy: '#061a2e',
+                            gold: '#b49454',
+                            teal: '#005b60',
+                            light: '#f8fafc',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .glass-nav {
+            background: rgba(6, 26, 46, 0.95);
+            backdrop-filter: blur(10px);
+        }
+        .modal-hidden {
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s ease;
+        }
+        .modal-visible {
+            opacity: 1;
+            pointer-events: auto;
+            transition: all 0.3s ease;
+        }
+    </style>
+</head>
+<body class="bg-tv-light text-gray-800 font-sans antialiased overflow-x-hidden">
+
+    <!-- Navegación -->
+    <nav class="fixed w-full z-50 glass-nav shadow-lg transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <div class="flex-shrink-0 flex items-center gap-3 cursor-pointer" onclick="window.location.href='index.html'">
+                    <img src="Logo T&V (2).png" alt="Timón y Vela Logo" class="h-14 bg-white rounded-lg p-1" onerror="this.src='https://placehold.co/150x150/061a2e/b49454?text=T%26V'">
+                    <span class="font-serif text-white text-xl font-semibold hidden sm:block">Timón y Vela</span>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="index.html#veleros" class="text-gray-300 hover:text-tv-gold transition-colors font-medium">Nuestros Veleros</a>
+                    <a href="index.html#experiencias" class="text-gray-300 hover:text-tv-gold transition-colors font-medium">Experiencias</a>
+                    <a href="catalogo.html" class="text-tv-gold font-medium">Catálogo</a>
+                    <a href="index.html#operacion" class="text-gray-300 hover:text-tv-gold transition-colors font-medium">Ubicación</a>
+                    <a href="index.html#equipo" class="text-gray-300 hover:text-tv-gold transition-colors font-medium">Equipo</a>
+                </div>
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-btn" class="text-white focus:outline-none">
+                        <i class="fas fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Menú Móvil -->
+        <div id="mobile-menu" class="hidden md:hidden bg-tv-navy border-t border-gray-700">
+            <a href="index.html#veleros" class="block px-4 py-3 text-gray-300 hover:bg-tv-teal hover:text-white">Nuestros Veleros</a>
+            <a href="index.html#experiencias" class="block px-4 py-3 text-gray-300 hover:bg-tv-teal hover:text-white">Experiencias</a>
+            <a href="catalogo.html" class="block px-4 py-3 text-tv-gold bg-tv-navy/50">Catálogo</a>
+            <a href="index.html#operacion" class="block px-4 py-3 text-gray-300 hover:bg-tv-teal hover:text-white">Ubicación</a>
+            <a href="index.html#equipo" class="block px-4 py-3 text-gray-300 hover:bg-tv-teal hover:text-white">Equipo</a>
+        </div>
+    </nav>
+
+    <!-- Contenido del Catálogo -->
+    <main class="pt-28 pb-20 min-h-screen bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Botón de regreso -->
+            <a href="index.html" class="inline-flex items-center text-tv-navy hover:text-tv-gold transition-colors font-semibold text-lg group mb-8">
+                <i class="fas fa-arrow-left mr-2 transform group-hover:-translate-x-1 transition-transform"></i> Volver al Inicio
+            </a>
+
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-5xl font-serif font-bold text-tv-navy mb-4">Arma tu Combo</h2>
+                <div class="h-1 w-24 bg-tv-gold mx-auto rounded"></div>
+                <p class="mt-6 text-gray-600 max-w-2xl mx-auto text-lg">
+                    (Adicionales al valor de tour básico). Personaliza y eleva tu experiencia añadiendo estos servicios exclusivos.
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+                <!-- Tablero -->
+                <div class="bg-tv-light rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 flex flex-col group">
+                    <div class="h-56 overflow-hidden">
+                        <img src="catalogo/tablero.jpeg" alt="Tablero" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                    </div>
+                    <div class="p-6 flex-grow flex flex-col justify-between">
+                        <div>
+                            <h3 class="font-bold text-tv-navy text-xl mb-2">Tablero</h3>
+                            <p class="text-sm text-gray-600">Un mensaje para esa persona especial.</p>
+                        </div>
+                        <div class="mt-4 font-bold text-tv-teal text-xl">$20.000</div>
+                    </div>
+                </div>
+
+                <!-- Globos -->
+                <div class="bg-tv-light rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 flex flex-col group">
+                    <div class="h-56 overflow-hidden">
+                        <img src="catalogo/globos.jpeg" alt="Globos" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                    </div>
+                    <div class="p-6 flex-grow flex flex-col justify-between">
+                        <div>
+                            <h3 class="font-bold text-tv-navy text-xl mb-2">Globos</h3>
+                            <p class="text-sm text-gray-600">24 Globos decorando la embarcación.</p>
+                        </div>
+                        <div class="mt-4 font-bold text-tv-teal text-xl">$30.000</div>
+                    </div>
+                </div>
+
+                <!-- Vino Tinto -->
+                <div class="bg-tv-light rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 flex flex-col group">
+                    <div class="h-56 overflow-hidden">
+                        <img src="catalogo/vino gato negro.jpeg" alt="Vino Tinto" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                    </div>
+                    <div class="p-6 flex-grow flex flex-col justify-between">
+                        <div>
+                            <h3 class="font-bold text-tv-navy text-xl mb-2">Vino Tinto Gato Negro</h3>
+                            <p class="text-sm text-gray-600">1 Botella de vino Tinto Gato Negro.</p>
+                        </div>
+                        <div class="mt-4 font-bold text-tv-teal text-xl">$70.000</div>
+                    </div>
+                </div>
+
+                <!-- Vino Espumoso -->
+                <div class="bg-tv-light rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 flex flex-col group">
+                    <div class="h-56 overflow-hidden">
+                        <img src="catalogo/vino espumoso.jpeg" alt="Vino Espumoso" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                    </div>
+                    <div class="p-6 flex-grow flex flex-col justify-between">
+                        <div>
+                            <h3 class="font-bold text-tv-navy text-xl mb-2">Vino Espumoso Lambrusco</h3>
+                            <p class="text-sm text-gray-600">1 Botella de vino Espumoso Lambrusco.</p>
+                        </div>
+                        <div class="mt-4 font-bold text-tv-teal text-xl">$60.000</div>
+                    </div>
+                </div>
+
+                <!-- Mocktail -->
+                <div class="bg-tv-light rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 flex flex-col group">
+                    <div class="h-56 overflow-hidden">
+                        <img src="catalogo/mocktail.jpeg" alt="Mocktail" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                    </div>
+                    <div class="p-6 flex-grow flex flex-col justify-between">
+                        <div>
+                            <h3 class="font-bold text-tv-navy text-xl mb-2">Mocktail (sin licor)</h3>
+                            <p class="text-sm text-gray-600">1 Botella Mocktail, puedes elegir entre frutos rojos o frutos amarillos.</p>
+                        </div>
+                        <div class="mt-4 font-bold text-tv-teal text-xl">$40.000</div>
+                    </div>
+                </div>
+
+                <!-- Tabla de Quesos -->
+                <div class="bg-tv-light rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 flex flex-col group">
+                    <div class="h-56 overflow-hidden">
+                        <img src="catalogo/tablaquesos.jpeg" alt="Tabla de Quesos" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                    </div>
+                    <div class="p-6 flex-grow flex flex-col justify-between">
+                        <div>
+                            <h3 class="font-bold text-tv-navy text-xl mb-2">Tabla de Quesos</h3>
+                            <p class="text-sm text-gray-600">La mejor combinación de quesos, jamón serrano y frutas para compartir. Para 2-4 personas.</p>
+                        </div>
+                        <div class="mt-4 font-bold text-tv-teal text-xl">$90.000 - $150.000</div>
+                    </div>
+                </div>
+
+                <!-- Sandwich -->
+                <div class="bg-tv-light rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 flex flex-col group">
+                    <div class="h-56 overflow-hidden">
+                        <img src="catalogo/sandwich.jpeg" alt="Sandwich" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                    </div>
+                    <div class="p-6 flex-grow flex flex-col justify-between">
+                        <div>
+                            <h3 class="font-bold text-tv-navy text-xl mb-2">Sandwich Regatta</h3>
+                            <p class="text-sm text-gray-600">Pan artesanal, lechuga crespa, tomate, queso mozarella, jamón de pollo y pollo desmenuzado en salsa de crema de leche y orégano.</p>
+                        </div>
+                        <div class="mt-4 font-bold text-tv-teal text-xl">$15.000 <span class="text-sm font-normal text-gray-500">c/u</span></div>
+                    </div>
+                </div>
+
+                <!-- Asador -->
+                <div class="bg-tv-light rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 flex flex-col group">
+                    <div class="h-56 overflow-hidden">
+                        <img src="catalogo/asador.jpeg" alt="Asador" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                    </div>
+                    <div class="p-6 flex-grow flex flex-col justify-between">
+                        <div>
+                            <h3 class="font-bold text-tv-navy text-xl mb-2">Asador y Parrillero</h3>
+                            <p class="text-sm text-gray-600">Asador y parrillero a bordo (solo aplica para 2 o más horas). Plato por persona $25.000.</p>
+                        </div>
+                        <div class="mt-4 font-bold text-tv-teal text-xl">$200.000</div>
+                    </div>
+                </div>
+
+                <!-- Flores -->
+                <div class="bg-tv-light rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 flex flex-col group">
+                    <div class="h-56 overflow-hidden">
+                        <img src="catalogo/ramo flores.jpeg" alt="Flores" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                    </div>
+                    <div class="p-6 flex-grow flex flex-col justify-between">
+                        <div>
+                            <h3 class="font-bold text-tv-navy text-xl mb-2">Ramo de Flores</h3>
+                            <p class="text-sm text-gray-600">Ramo de flores para sorprender a tu persona especial.</p>
+                        </div>
+                        <div class="mt-4 font-bold text-tv-teal text-xl">$80.000</div>
+                    </div>
+                </div>
+
+                <!-- Velas -->
+                <div class="bg-tv-light rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 flex flex-col group col-span-1 sm:col-span-2 lg:col-span-1">
+                    <div class="h-56 overflow-hidden">
+                        <img src="catalogo/mensaje velas.jpeg" alt="Velas Especiales" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                    </div>
+                    <div class="p-6 flex-grow flex flex-col justify-between">
+                        <div>
+                            <h3 class="font-bold text-tv-navy text-xl mb-2">Velas Mensajes</h3>
+                            <p class="text-sm text-gray-600">
+                                Opciones: Pedida de novios, mano, Feliz Cumpleaños o Aniversario.<br><br>
+                                Vela sorpresa enrollada sobre la cubierta, se desplegara durante el recorrido cuando des la señal al capitán.
+                            </p>
+                        </div>
+                        <div class="mt-4 font-bold text-tv-teal text-xl">$40.000</div>
+                    </div>
+                </div>
+
+                <!-- Reposteria -->
+                <div class="bg-tv-light rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 flex flex-col group">
+                    <div class="h-56 overflow-hidden">
+                        <img src="catalogo/cupcakes.jpeg" alt="Repostería" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                    </div>
+                    <div class="p-6 flex-grow flex flex-col justify-between">
+                        <div>
+                            <h3 class="font-bold text-tv-navy text-xl mb-2">Cupcakes / Birthday Mini Cake</h3>
+                            <p class="text-sm text-gray-600">¡Celebra con el diseño que elijas!</p>
+                        </div>
+                        <div class="mt-4 font-bold text-tv-teal text-xl">$50.000</div>
+                    </div>
+                </div>
+
+                <!-- Dúo Guitarra -->
+                <div class="bg-tv-light rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 flex flex-col group">
+                    <div class="h-56 overflow-hidden">
+                        <img src="catalogo/duomusic.jpeg" alt="Dúo" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                    </div>
+                    <div class="p-6 flex-grow flex flex-col justify-between">
+                        <div>
+                            <h3 class="font-bold text-tv-navy text-xl mb-2">Dúo Guitarra-Voz</h3>
+                            <p class="text-sm text-gray-600">Dúo interpretando las mejores canciones románticas con más de 4 instrumentos.</p>
+                        </div>
+                        <div class="mt-4 font-bold text-tv-teal text-xl">$350.000</div>
+                    </div>
+                </div>
+
+                <!-- Saxofonista -->
+                <div class="bg-tv-light rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 flex flex-col group">
+                    <div class="h-56 overflow-hidden">
+                        <img src="catalogo/saxofonista.jpeg" alt="Saxofonista" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                    </div>
+                    <div class="p-6 flex-grow flex flex-col justify-between">
+                        <div>
+                            <h3 class="font-bold text-tv-navy text-xl mb-2">Saxofonista</h3>
+                            <p class="text-sm text-gray-600">Saxofonista a bordo amenizando todo el recorrido.</p>
+                        </div>
+                        <div class="mt-4 font-bold text-tv-teal text-xl">$200.000</div>
+                    </div>
+                </div>
+
+                <!-- Camarógrafo -->
+                <div class="bg-tv-light rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 flex flex-col group">
+                    <div class="h-56 overflow-hidden">
+                        <img src="catalogo/camarografo.jpeg" alt="Fotografía" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                    </div>
+                    <div class="p-6 flex-grow flex flex-col justify-between">
+                        <div>
+                            <h3 class="font-bold text-tv-navy text-xl mb-2">Camarógrafo Profesional</h3>
+                            <p class="text-sm text-gray-600">Camarógrafo captando los mejores momentos durante el recorrido, te enviará de 40 a 50 fotografías editadas mediante drive.</p>
+                        </div>
+                        <div class="mt-4 font-bold text-tv-teal text-xl">$200.000</div>
+                    </div>
+                </div>
+
+                <!-- Dron -->
+                <div class="bg-tv-light rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 flex flex-col group">
+                    <div class="h-56 overflow-hidden">
+                        <img src="catalogo/dron.jpeg" alt="Dron" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                    </div>
+                    <div class="p-6 flex-grow flex flex-col justify-between">
+                        <div>
+                            <h3 class="font-bold text-tv-navy text-xl mb-2">Video con Dron</h3>
+                            <p class="text-sm text-gray-600">Video con dron de 2 min aprox. Entre semana puedes adquirirlo con nosotros, los fines de semana lo adquieres directamente en el club.</p>
+                        </div>
+                        <div class="mt-4 font-bold text-tv-teal text-xl">$60.000</div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer / Pagos -->
+    <footer class="bg-tv-navy text-white pt-16 pb-8 border-t-4 border-tv-gold">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
+                <!-- Marca -->
+                <div class="flex flex-col items-center md:items-start">
+                    <div class="bg-white p-2 rounded-lg inline-block mb-4">
+                        <img src="Logo T&V (2).png" alt="Timón y Vela" class="h-16" onerror="this.style.display='none'; this.insertAdjacentHTML('afterend', '<h2 class=\'text-tv-navy font-serif font-bold\'>Timón & Vela</h2>');">
+                    </div>
+                    <p class="text-gray-400 text-sm text-center md:text-left mt-2">
+                        Veleros Guatavita.<br>Te esperamos para que vivas la mejor experiencia a bordo.
+                    </p>
+                </div>
+
+                <!-- Pagos -->
+                <div class="flex flex-col items-center md:items-start">
+                    <h4 class="text-lg font-serif font-bold text-tv-gold mb-4">Formas de Pago</h4>
+                    <div class="space-y-3 text-sm text-gray-300 w-full max-w-xs">
+                        <div class="flex justify-between items-center border-b border-gray-700 pb-2">
+                            <span><i class="fas fa-mobile-screen text-purple-400 mr-2"></i>Cuenta de ahorros Bancolombia:</span>
+                            <span class="font-mono bg-gray-800 px-2 py-1 rounded select-all cursor-pointer" title="Doble clic para seleccionar">33600001653</span>
+                        </div>
+                        <div class="flex justify-between items-center border-b border-gray-700 pb-2">
+                            <span><i class="fas fa-key text-yellow-500 mr-2"></i>Llave</span>
+                            <span class="font-mono bg-gray-800 px-2 py-1 rounded select-all cursor-pointer">1071144374</span>
+                        </div>
+                        <p class="text-xs text-gray-400 mt-2">Titular: Valentina Reyes</p>
+                        <div class="mt-4 bg-tv-teal/20 p-3 rounded text-xs border border-tv-teal/30">
+                            <p><i class="fas fa-credit-card mr-1"></i> <strong>Bold (Tarjeta):</strong> Solicita el link (+5% recargo).</p>
+                            <p class="mt-1 text-tv-gold font-semibold"><i class="fas fa-money-bill-wave mr-1"></i> El saldo se solicita cancelarlo en EFECTIVO.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Enlaces -->
+                <div class="flex flex-col items-center md:items-start">
+                    <h4 class="text-lg font-serif font-bold text-tv-gold mb-4">Información Legal</h4>
+                    <button onclick="openModal()" class="flex items-center text-gray-300 hover:text-white transition-colors group">
+                        <i class="fas fa-file-contract mr-2 group-hover:text-tv-gold transition-colors"></i>
+                        Ver Políticas de la Empresa
+                    </button>
+                    <div class="mt-8">
+                        <a href="https://wa.me/573108507415?text=Hola%20Timón%20y%20Vela,%20vengo%20de%20la%20página%20web%20y%20me%20gustaría%20reservar%20una%20experiencia." target="_blank" rel="noopener noreferrer" class="bg-green-600 hover:bg-green-500 text-white px-6 py-3 rounded-full font-semibold transition-colors flex items-center shadow-lg">
+                            <i class="fab fa-whatsapp text-2xl mr-2"></i> Contactar
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-700 pt-8 text-center text-sm text-gray-500">
+                <p>&copy; 2024 Timón y Vela - Veleros Guatavita. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modal de Políticas (Mismo que en index.html) -->
+    <div id="policy-modal" class="fixed inset-0 z-[100] flex items-center justify-center modal-hidden">
+        <div class="absolute inset-0 bg-tv-navy/80 backdrop-blur-sm" onclick="closeModal()"></div>
+        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-3xl max-h-[90vh] overflow-y-auto relative z-10 mx-4">
+            <div class="sticky top-0 bg-white border-b border-gray-100 p-6 flex justify-between items-center z-20">
+                <h3 class="text-2xl font-serif font-bold text-tv-navy">Políticas de la Empresa</h3>
+                <button onclick="closeModal()" class="text-gray-400 hover:text-red-500 transition-colors focus:outline-none">
+                    <i class="fas fa-times text-2xl"></i>
+                </button>
+            </div>
+            <div class="p-6 md:p-8 space-y-6 text-gray-600 text-sm md:text-base">
+                <p class="bg-tv-light p-4 rounded-lg border-l-4 border-tv-gold italic">En Timón y Vela queremos brindarles una experiencia inolvidable. Para garantizar una operación organizada y respetar los tiempos, aplican las siguientes políticas:</p>
+                
+                <div>
+                    <h4 class="text-lg font-bold text-tv-navy mb-2"><i class="fas fa-calendar-check mr-2 text-tv-teal"></i>Reserva</h4>
+                    <ul class="list-disc pl-5 space-y-1">
+                        <li>Abono del <strong>50%</strong> del valor total para confirmar.</li>
+                        <li>Llegar 15 minutos antes de la hora programada.</li>
+                        <li>Cambios en la cantidad de personas con mínimo 24h de anticipación. De lo contrario, se cancela el valor de las personas confirmadas inicialmente.</li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-lg font-bold text-tv-navy mb-2"><i class="fas fa-ban mr-2 text-red-500"></i>Cancelaciones</h4>
+                    <ul class="list-disc pl-5 space-y-1">
+                        <li>El abono del 50% <strong>NO es reembolsable</strong>.</li>
+                        <li>En caso de cancelar, se podrá reagendar según disponibilidad.</li>
+                        <li class="font-semibold mt-2">Multas por cancelación:</li>
+                        <ul class="list-circle pl-5 text-red-600 font-medium">
+                            <li>Con 3 horas o más de anticipación: $80.000 COP.</li>
+                            <li>Con 2 horas o menos de anticipación: $160.000 COP.</li>
+                        </ul>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-lg font-bold text-tv-navy mb-2"><i class="fas fa-calendar-days mr-2 text-tv-teal"></i>Reagendación</h4>
+                    <ul class="list-disc pl-5 space-y-1">
+                        <li>Sin multa hasta 1 día antes del tour.</li>
+                        <li>Si se solicita el mismo día, aplica multa por reagendación.</li>
+                        <li>La nueva fecha debe programarse máximo en 2 meses.</li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-lg font-bold text-tv-navy mb-2"><i class="fas fa-burger mr-2 text-tv-gold"></i>Servicios adicionales</h4>
+                    <p>En caso de cancelar el mismo día: Se cobrará el 100% de comida y bebida preparada. Si se reagenda y se desean nuevamente, deberán pagarse otra vez.</p>
+                </div>
+
+                <div class="bg-gray-50 p-4 rounded-lg border border-gray-200">
+                    <h4 class="text-lg font-bold text-tv-navy mb-2"><i class="fas fa-cloud-rain mr-2 text-blue-400"></i>Condiciones climáticas</h4>
+                    <ul class="list-disc pl-5 space-y-1">
+                        <li>Recomendamos llevar chaqueta o ropa para lluvia.</li>
+                        <li>Solo se cancela el tour por <strong>tormenta eléctrica</strong>. En ese caso no hay devolución del abono, se reagendará según disponibilidad.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Botón Flotante de WhatsApp en el catálogo -->
+    <a href="https://wa.me/573108507415?text=Hola%20Timón%20y%20Vela,%20vengo%20de%20la%20página%20web%20y%20me%20gustaría%20reservar%20una%20experiencia." target="_blank" rel="noopener noreferrer" class="fixed bottom-6 right-6 z-50 bg-[#25D366] hover:bg-[#128C7E] text-white rounded-full w-16 h-16 flex items-center justify-center shadow-[0_4px_14px_0_rgba(37,211,102,0.5)] transition-all duration-300 hover:scale-110 group animate-bounce-slow">
+        <i class="fab fa-whatsapp text-4xl"></i>
+        <!-- Tooltip emergente al pasar el mouse -->
+        <span class="absolute right-20 bg-white text-gray-800 text-sm px-4 py-2 rounded-xl shadow-lg border border-gray-100 opacity-0 pointer-events-none group-hover:opacity-100 transition-opacity duration-300 w-max font-medium">
+            ¡Reserva aquí!
+            <!-- Triangulito del globo de diálogo -->
+            <span class="absolute top-1/2 -right-2 transform -translate-y-1/2 w-0 h-0 border-t-[6px] border-t-transparent border-l-[8px] border-l-white border-b-[6px] border-b-transparent"></span>
+        </span>
+    </a>
+
+    <script>
+        // Lógica de Navegación Móvil
+        var mobileBtn = document.getElementById('mobile-menu-btn');
+        var mobileMenu = document.getElementById('mobile-menu');
+        var navbar = document.getElementById('navbar');
+
+        function toggleMobileMenu() {
+            mobileMenu.classList.toggle('hidden');
+        }
+
+        if (mobileBtn) {
+            mobileBtn.addEventListener('click', toggleMobileMenu);
+        }
+
+        // Cambio de fondo del navbar al hacer scroll
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('shadow-lg');
+                navbar.style.background = 'rgba(6, 26, 46, 0.98)';
+            } else {
+                navbar.classList.remove('shadow-lg');
+                navbar.style.background = 'rgba(6, 26, 46, 0.85)';
+            }
+        });
+
+        // Lógica de Pestañas (Tabs) de Precios
+        function switchTab(tabId) {
+            var btnSolo = document.getElementById('tab-solo');
+            var btnCombo = document.getElementById('tab-combo');
+            var contentSolo = document.getElementById('content-solo');
+            var contentCombo = document.getElementById('content-combo');
+
+            // Resetear estilos
+            btnSolo.className = "px-8 py-3 rounded-full font-semibold transition-colors duration-300 text-gray-600 hover:text-tv-navy";
+            btnCombo.className = "px-8 py-3 rounded-full font-semibold transition-colors duration-300 text-gray-600 hover:text-tv-navy";
+            
+            contentSolo.classList.add('hidden');
+            contentCombo.classList.add('hidden');
+
+            // Activar seleccionada
+            if (tabId === 'solo') {
+                btnSolo.className = "px-8 py-3 rounded-full font-semibold transition-colors duration-300 bg-tv-navy text-white";
+                contentSolo.classList.remove('hidden');
+                contentSolo.style.opacity = 0;
+                setTimeout(() => contentSolo.style.opacity = 1, 50);
+            } else {
+                btnCombo.className = "px-8 py-3 rounded-full font-semibold transition-colors duration-300 bg-tv-navy text-white";
+                contentCombo.classList.remove('hidden');
+                contentCombo.style.opacity = 0;
+                setTimeout(() => contentCombo.style.opacity = 1, 50);
+            }
+        }
+
+        // Lógica del Modal de Políticas
+        var modal = document.getElementById('policy-modal');
+        var body = document.body;
+
+        function openModal() {
+            modal.classList.remove('modal-hidden');
+            modal.classList.add('modal-visible');
+            body.style.overflow = 'hidden'; // Prevenir scroll de fondo
+        }
+
+        function closeModal() {
+            modal.classList.remove('modal-visible');
+            modal.classList.add('modal-hidden');
+            body.style.overflow = 'auto'; // Restaurar scroll
+        }
+
+        // Cerrar modal con la tecla ESC
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && modal.classList.contains('modal-visible')) {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</html>
